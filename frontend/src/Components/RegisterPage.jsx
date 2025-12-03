@@ -22,7 +22,6 @@ export default function RegisterPage() {
     const handleRegister = async () => {
         try {
             const response = await axios.post(`${BASE_URL}/register`, { ...formData });
-            console.log(response);
             if (response.status === 201) {
                 navigate("/", { state: { message: response.data.message } });
             }

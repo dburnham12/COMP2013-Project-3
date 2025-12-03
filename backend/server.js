@@ -108,7 +108,6 @@ server.post("/register", async (request, response) => {
  */
 server.post("/login", async (request, response) => {
     const { username, password } = request.body; // get username and password from request body
-    console.log(request.body);
     try {
         const user = await User.findOne({ username }); // find user by username
         // CASE 1: user not found -> authentication failed error
