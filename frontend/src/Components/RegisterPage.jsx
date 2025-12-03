@@ -1,11 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
 import AuthFormComponent from "./AuthFormComponent";
+import { BASE_URL } from "../utility/constants";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
     // States
     const [formData, setFormData] = useState({ username: "", password: "" });
     const [postResponse, setPostResponse] = useState("");
+
+    // Hooks
+    const navigate = useNavigate();
 
     // Handlers
     const handleOnChange = (e) => {
@@ -16,10 +21,13 @@ export default function RegisterPage() {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/register", { ...formData });
-            setPostResponse(response.data.message);
+            const response = await axios.post(`${BASE_URL}/register`, { ...formData });
+            console.log(response);
+            if (response.status === 201) {
+                navigate("/", { state: { message: response.data.message } });
+            }
         } catch (error) {
-            setPostResponse(error.response.data.message || "Cannot add username");
+            setPostResponse(error?.response?.data.message || "Cannot add username");
         }
     };
 
@@ -37,6 +45,7 @@ export default function RegisterPage() {
                 handleOnChange={handleOnChange}
                 handleOnSubmit={handleOnSubmit}
                 currentPage="register"
+                locationState={null}
             />
         </div>
     );

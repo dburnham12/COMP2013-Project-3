@@ -5,17 +5,17 @@ import LoginPage from "./Components/LoginPage";
 import GroceriesAppContainer from "./Components/GroceriesAppContainer";
 
 function App() {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/main" element={<GroceriesAppContainer />} />
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Routes>
-      </Router>
-    </>
-  );
+    return (
+        <>
+            <Router>
+                <Routes>
+                    <Route path="/main" element={<GroceriesAppContainer />} />
+                    <Route path="/" element={<LoginPage />} />
+                    <Route path="/create-user" element={<RegisterPage />} />
+                </Routes>
+            </Router>
+        </>
+    );
 }
 
 export default App;
