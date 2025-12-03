@@ -1,13 +1,18 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import products from "./data/products";
-import GroceriesAppContainer from "./Components/GroceriesAppContainer";
+import RegisterPage from "./Components/RegisterPage";
 
 function App() {
-  return (
-    <>
-      <GroceriesAppContainer products={products} />
-    </>
-  );
+    return (
+        <>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<RegisterPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                </Routes>
+            </Router>
+        </>
+    );
 }
 
 export default App;
