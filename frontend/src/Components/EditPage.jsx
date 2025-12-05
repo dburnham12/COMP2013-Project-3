@@ -5,21 +5,15 @@ import ProductForm from "./ProductForm";
 import { jwtDecode } from "jwt-decode";
 import { ADMIN_NAMES, BASE_URL } from "../utility/constants";
 import Cookies from "js-cookie";
-export default function EditPage(
-  {
-    /*handleOnSubmit,
-  handleOnChange,
-  formData,
-  postResponse,
-  isEditing,
-  setFormData,
-  */
-  }
-) {
+export default function EditPage() {
+  //Location
   const location = useLocation();
-  console.log(location);
+  //Navigate
   const navigate = useNavigate();
 
+  //States
+
+  //User state
   const [currentUser, setCurrentUser] = useState(() => {
     const jwtToken = Cookies.get("jwt-authorization");
     if (!jwtToken) {
@@ -33,9 +27,24 @@ export default function EditPage(
     }
   });
 
-  //useEffect
+  //Form Data state
+  const [formData, setFormData] = useState({
+    productName: "",
+    brand: "",
+    image: "",
+    price: "",
+    _id: "",
+  });
+
+  //Editing mode state
+  const [isEditing, setIsEditing] = useState(true);
+
+  //Post response state
+  const [postResponse, setPostResponse] = useState("");
+
+  //useEffect for checking if the user is an admin and can access the edit page
+  //which is restricted
   useEffect(() => {
-    console.log(location);
     if (!currentUser || !ADMIN_NAMES.includes(currentUser) || !location.state) {
       navigate("/not-authorized");
     }
@@ -48,16 +57,7 @@ export default function EditPage(
     });
   }, []);
 
-  const [formData, setFormData] = useState({
-    productName: "",
-    brand: "",
-    image: "",
-    price: "",
-    _id: "",
-  });
-  const [isEditing, setIsEditing] = useState(true);
-  const [postResponse, setPostResponse] = useState("");
-
+  //Handler for submitting the form
   const handleOnSubmit = async (e) => {
     if (isEditing) {
       e.preventDefault();
@@ -88,10 +88,12 @@ export default function EditPage(
     }
   };
 
+  //Handler for changing the form
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //Handler for updating the product in the DB
   const handleUpdateProduct = async (productId) => {
     try {
       await axios
@@ -112,15 +114,7 @@ export default function EditPage(
     }
   };
 
-  /*
-  setFormData({
-    productName: location.state.productName,
-    brand: location.state.brand,
-    price: location.state.price,
-    image: location.state.image,
-  });
-*/
-  console.log(location);
+  //Return statement
   return (
     <div>
       <ProductForm

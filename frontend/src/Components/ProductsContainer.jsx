@@ -1,5 +1,4 @@
 import ProductCard from "./ProductCard";
-
 export default function ProductsContainer({
   products,
   handleAddQuantity,
@@ -8,6 +7,7 @@ export default function ProductsContainer({
   productQuantity,
   handleEditProduct,
   handleDeleteProduct,
+  navigate,
 }) {
   return (
     <div className="ProductsContainer">
@@ -23,6 +23,7 @@ export default function ProductsContainer({
           }
           handleEditProduct={handleEditProduct}
           handleDeleteProduct={handleDeleteProduct}
+          navigate={navigate}
         />
       ))}
     </div>
