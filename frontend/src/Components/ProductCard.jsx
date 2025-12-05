@@ -1,5 +1,4 @@
 import QuantityCounter from "./QuantityCounter";
-
 export default function ProductCard({
   productName,
   brand,
@@ -13,6 +12,7 @@ export default function ProductCard({
   handleEditProduct,
   _id,
   handleDeleteProduct,
+  navigate,
 }) {
   return (
     <div className="ProductCard">
@@ -30,9 +30,14 @@ export default function ProductCard({
       <button onClick={() => handleAddToCart(id)}>Add to Cart</button>
       <button
         id="edit-button"
-        onClick={() =>
-          handleEditProduct({ price, brand, productName, image, _id })
-        }
+        onClick={() => {
+          //When button is pushed, navigate to edit-product route and
+          //transfer all product information over there aswell
+          handleEditProduct({ productName, brand, image, price, _id });
+          navigate("/edit-product", {
+            state: { productName, brand, image, price, _id },
+          });
+        }}
       >
         Edit
       </button>
