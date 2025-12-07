@@ -47,14 +47,15 @@ export default function EditPage() {
     useEffect(() => {
         if (!currentUser || !ADMIN_NAMES.includes(currentUser) || !location.state) {
             navigate("/not-authorized");
+        } else {
+            setFormData({
+                productName: location.state.productName,
+                brand: location.state.brand,
+                image: location.state.image,
+                price: location.state.price,
+                _id: location.state._id,
+            });
         }
-        setFormData({
-            productName: location.state.productName,
-            brand: location.state.brand,
-            image: location.state.image,
-            price: location.state.price,
-            _id: location.state._id,
-        });
     }, []);
 
     //Handler for submitting the form
