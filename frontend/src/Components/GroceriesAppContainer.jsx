@@ -118,6 +118,7 @@ export default function GroceriesAppContainer() {
         try {
             await axios.delete(`${BASE_URL}/products/${productId}`).then((result) => {
                 setPostResponse(`${result.data.productName} deleted\n with id: ${result.data.id}`);
+                // Delete the item from the cart if it is deleted
                 handleRemoveFromCart(result.data.id);
             });
         } catch (error) {
