@@ -96,17 +96,21 @@ server.patch("/products/:id", async (request, response) => {
 // Login and Register Routes
 // Register Route
 server.post("/register", async (request, response) => {
-    const { username, password } = request.body;
+    const { username, password } = request.body; // get username and passwod from request body
     try {
         // Hashing a password needs bcrypt and salt rounds as an int
         const hashedPassword = await bcrypt.hash(password, 10);
+        // Set up the new user using the User schema
         const newUser = new User({
             username,
             password: hashedPassword,
         });
+        // Attempt to save the user to the DB
         await newUser.save();
+        // If successful respond with an approriate message to the frontend
         response.status(201).send({ message: `User ${username} added! Please login!` });
     } catch (error) {
+        // If not successful respond with error message to the frontend
         response.status(500).send({ message: "User already exists, Enter a new username" });
     }
 });
