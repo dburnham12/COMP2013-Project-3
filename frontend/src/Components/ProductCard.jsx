@@ -37,7 +37,6 @@ export default function ProductCard({
                         onClick={() => {
                             //When button is pushed, navigate to edit-product route and
                             //transfer all product information over there aswell
-                            //handleEditProduct({ productName, brand, image, price, _id });
                             navigate("/edit-product", {
                                 state: { productName, brand, image, price, _id },
                             });
