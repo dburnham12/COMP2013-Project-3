@@ -6,7 +6,7 @@ import NavBar from "./NavBar";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import { ADMIN_NAMES } from "../utility/constants";
+import { ADMIN_NAMES, BASE_URL } from "../utility/constants";
 import FilterForm from "./FilterForm";
 
 export default function GroceriesAppContainer() {
@@ -17,6 +17,7 @@ export default function GroceriesAppContainer() {
 	const [productList, setProductList] = useState([]);
 	const [postResponse, setPostResponse] = useState("");
 	const [currentUser, setCurrentUser] = useState(() => {
+    // creating jwt cookie
 		const jwtToken = Cookies.get("jwt-authorization");
 		if (!jwtToken) {
 			return "";
@@ -40,6 +41,7 @@ export default function GroceriesAppContainer() {
 	}, [postResponse]);
 
 	useEffect(() => {
+    // use effect to verify existing user, else navigate to not authorized page
 		if (!currentUser) {
 			navigate("/not-authorized");
 		}
@@ -53,25 +55,13 @@ export default function GroceriesAppContainer() {
 
 	const handleProductsFromDB = async () => {
 		try {
-			await axios.get("http://localhost:3000/products").then((result) => {
+			await axios.get(`${BASE_URL}/products`).then((result) => {
 				setProductList(result.data);
 				setProductQuantity(initialProductQuantity(result.data));
 			});
 		} catch (error) {
 			console.log(error.message);
 		}
-	};
-
-	const handleEditProduct = (product) => {
-		// setFormData({
-		//     productName: product.productName,
-		//     brand: product.brand,
-		//     image: product.image,
-		//     price: product.price,
-		//     _id: product._id,
-		// });
-		// setIsEditing(true);
-		// setPostResponse("");
 	};
 
 	const handleAddQuantity = (productId, mode) => {
@@ -121,7 +111,7 @@ export default function GroceriesAppContainer() {
 	const handleDeleteProduct = async (productId) => {
 		try {
 			await axios
-				.delete(`http://localhost:3000/products/${productId}`)
+				.delete(`${BASE_URL}/products/${productId}`)
 				.then((result) => {
 					console.log(result);
 					setPostResponse(
@@ -212,7 +202,6 @@ export default function GroceriesAppContainer() {
 					handleRemoveQuantity={handleRemoveQuantity}
 					handleAddToCart={handleAddToCart}
 					productQuantity={productQuantity}
-					//handleEditProduct={handleEditProduct}
 					handleDeleteProduct={handleDeleteProduct}
 					navigate={navigate}
 					currentUser={currentUser}

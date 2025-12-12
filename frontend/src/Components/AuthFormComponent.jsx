@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 
+// Auth Form Component
+// Used to display a form for login and register
 export default function AuthFormComponent({
     formData,
     handleOnSubmit,
@@ -10,8 +12,11 @@ export default function AuthFormComponent({
 }) {
     return (
         <div className="AuthFormContainer">
+            {/* Display Header Based off current page */}
             <h1>{currentPage === "register" ? "Create a new user" : "Groceries App"}</h1>
+            {/* Set up the form component */}
             <form onSubmit={handleOnSubmit} className="AuthForm">
+                {/* Input group for the username */}
                 <div className="FormField">
                     <label className="FormLabel" htmlFor="username">
                         Username:
@@ -24,6 +29,7 @@ export default function AuthFormComponent({
                         onChange={handleOnChange}
                     />
                 </div>
+                {/* Input group for the password */}
                 <div className="FormField">
                     <label className="FormLabel" htmlFor="password">
                         Password:
@@ -36,9 +42,12 @@ export default function AuthFormComponent({
                         onChange={handleOnChange}
                     />
                 </div>
+                {/* Button with appropriate message based off of current page */}
                 <button>{currentPage === "register" ? "Create New User" : "Login"}</button>
             </form>
+            {/* Display any errors from postResponse */}
             <p className="ErrorMessage">{postResponse}</p>
+            {/* Display correct message and links for the current page */}
             {currentPage === "register" ? (
                 <Link to="/">Back to login page</Link>
             ) : (
@@ -46,6 +55,7 @@ export default function AuthFormComponent({
                     Not a member yet click <Link to="/create-user">here</Link> to join
                 </p>
             )}
+            {/* If we recieved something from a seperate page (login=>register) display it */}
             {locationState && <h3>{locationState.message}</h3>}
         </div>
     );
