@@ -169,16 +169,22 @@ export default function GroceriesAppContainer() {
 		navigate("/");
 	};
 
+	/* Handle for when a filter is sellected, sets the filter, and\
+	 * populates the filtered product list */
 	const handleSelectFilter = (e) => {
 		setFilter(e.target.value);
-		setFilteredProductList(() =>
-			e.target.value
-				? productList.filter(
-						(product) =>
-							Number(product.price.replace("$", "")) <
-							Number(e.target.value)
-				  )
-				: setFilteredProductList([])
+		setFilteredProductList(
+			() =>
+				/* I designed to send an empty string back (a falsey value)
+				 * if "Show All" is the selected filter */
+				e.target.value
+					? productList.filter(
+							(product) =>
+								// the type casts probably aren't necessary, but it feels right
+								Number(product.price.replace("$", "")) <
+								Number(e.target.value)
+					  )
+					: setFilteredProductList([]) // this clears out the filter list if no filter is selected
 		);
 	};
 
@@ -199,6 +205,8 @@ export default function GroceriesAppContainer() {
 					handleSelectFilter={handleSelectFilter}
 				/>
 				<ProductsContainer
+					/* if there's no filter, show the full product list,
+					 * otherwise, show the filtered product list */
 					products={!filter ? productList : filteredProductList}
 					handleAddQuantity={handleAddQuantity}
 					handleRemoveQuantity={handleRemoveQuantity}
