@@ -6,6 +6,8 @@ export default function FilterForm({
 	return (
 		<div className="FilterForm">
 			<h3>Filter Price</h3>
+			{/* https://www.w3schools.com/react/react_forms_radio.asp
+			 * I used this as a reference for making the buttons */}
 			<input
 				type="radio"
 				name="filter"
