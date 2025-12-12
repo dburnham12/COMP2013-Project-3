@@ -17,7 +17,7 @@ export default function GroceriesAppContainer() {
 	const [productList, setProductList] = useState([]);
 	const [postResponse, setPostResponse] = useState("");
 	const [currentUser, setCurrentUser] = useState(() => {
-    // creating jwt cookie
+		// creating jwt cookie
 		const jwtToken = Cookies.get("jwt-authorization");
 		if (!jwtToken) {
 			return "";
@@ -41,7 +41,7 @@ export default function GroceriesAppContainer() {
 	}, [postResponse]);
 
 	useEffect(() => {
-    // use effect to verify existing user, else navigate to not authorized page
+		// use effect to verify existing user, else navigate to not authorized page
 		if (!currentUser) {
 			navigate("/not-authorized");
 		}
@@ -58,6 +58,16 @@ export default function GroceriesAppContainer() {
 			await axios.get(`${BASE_URL}/products`).then((result) => {
 				setProductList(result.data);
 				setProductQuantity(initialProductQuantity(result.data));
+				if (filter) {
+					// this reapplies the filter after deleting a product and updates that list
+					setFilteredProductList(() =>
+						result.data.filter(
+							(product) =>
+								Number(product.price.replace("$", "")) <
+								Number(filter)
+						)
+					);
+				}
 			});
 		} catch (error) {
 			console.log(error.message);
@@ -113,7 +123,6 @@ export default function GroceriesAppContainer() {
 			await axios
 				.delete(`${BASE_URL}/products/${productId}`)
 				.then((result) => {
-					console.log(result);
 					setPostResponse(
 						`${result.data.productName} deleted\n with id: ${result.data.id}`
 					);
