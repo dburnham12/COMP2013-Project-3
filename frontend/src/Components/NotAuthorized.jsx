@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+// not authorized page
+
 export default function NotAuthorized() {
     return (
         <div>

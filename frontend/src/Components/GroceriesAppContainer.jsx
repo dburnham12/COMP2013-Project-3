@@ -17,6 +17,7 @@ export default function GroceriesAppContainer() {
     const [productList, setProductList] = useState([]);
     const [postResponse, setPostResponse] = useState("");
     const [currentUser, setCurrentUser] = useState(() => {
+        // creating jwt cookie
         const jwtToken = Cookies.get("jwt-authorization");
         if (!jwtToken) {
             return "";
@@ -40,6 +41,7 @@ export default function GroceriesAppContainer() {
     }, [postResponse]);
 
     useEffect(() => {
+        // use effect to verify existing user, else navigate to not authorized page
         if (!currentUser) {
             navigate("/not-authorized");
         }
@@ -141,6 +143,7 @@ export default function GroceriesAppContainer() {
         setCartList([]);
     };
 
+    //handler for logging out, remove jwt cookie when user logs out
     const handleLogout = () => {
         Cookies.remove("jwt-authorization");
         setCurrentUser("");
