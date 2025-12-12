@@ -6,6 +6,8 @@ export default function FilterForm({
 	return (
 		<div className="FilterForm">
 			<h3>Filter Price</h3>
+			{/* https://www.w3schools.com/react/react_forms_radio.asp
+			 * I used this as a reference for making the buttons */}
 			<input
 				type="radio"
 				name="filter"
@@ -17,6 +19,8 @@ export default function FilterForm({
 			<label htmlFor="optionShowAll">Show All</label>
 			{options.map((option) => {
 				return (
+					/* I know typically span is for inline, but this didn't feel like a section
+					 * which would be in a div, and I needed a container for the key */
 					<span key={option}>
 						<br />
 						<input
@@ -28,7 +32,7 @@ export default function FilterForm({
 							onChange={handleSelectFilter}
 						/>
 						<label htmlFor={`option${option}`}>
-							&lt; ${option}.00{/*&lt; html escape for '<'*/}
+							&lt; ${option}.00{/* &lt; html escape for '<' */}
 						</label>
 					</span>
 				);
