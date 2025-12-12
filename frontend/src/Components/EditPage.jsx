@@ -81,7 +81,7 @@ export default function EditPage() {
   const handleUpdateProduct = async (productId) => {
     try {
       await axios
-        .patch(`http://localhost:3000/products/${productId}`, formData) //Update(patch) the DB with new form data
+        .patch(`${BASE_URL}/products/${productId}`, formData) //Update(patch) the DB with new form data
         .then((result) => {
           setPostResponse(result.data); //Update the post response
         });
